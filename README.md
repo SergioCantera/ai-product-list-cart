@@ -9,10 +9,12 @@ An AI-powered shopping assistant for a dessert store, featuring a custom chat in
 ## 🎯 Overview
 
 This project consists of two main components:
+
 - **Frontend**: React + Vite application with a custom AI chat sidebar
 - **Backend**: FastAPI server with LangChain integration for intelligent chat responses
 
 The AI assistant can help users:
+
 - Browse products from the catalog
 - Add/remove items from cart
 - Update product quantities
@@ -22,6 +24,7 @@ The AI assistant can help users:
 ## ✨ Features
 
 ### Frontend
+
 - 🎨 Modern UI with Tailwind CSS 4
 - 💬 Custom AI chat sidebar with markdown support
 - 🛒 Shopping cart with Zustand state management
@@ -29,6 +32,7 @@ The AI assistant can help users:
 - ✅ Order confirmation flow
 
 ### Backend
+
 - 🤖 LangChain-powered AI assistant
 - 🔧 Function calling for cart actions
 - 🌐 GitHub Models integration (gpt-4o-mini)
@@ -38,6 +42,7 @@ The AI assistant can help users:
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+
 - Python 3.10-3.12
 - Conda (recommended)
@@ -129,6 +134,7 @@ ai-shopping-assistant/
 ## 🛠️ Tech Stack
 
 ### Frontend
+
 - React 19.1.0
 - Vite 7.0.4
 - Tailwind CSS 4.1.11
@@ -136,6 +142,7 @@ ai-shopping-assistant/
 - React Markdown
 
 ### Backend
+
 - Python 3.12
 - FastAPI
 - LangChain
@@ -146,25 +153,27 @@ ai-shopping-assistant/
 
 The AI assistant understands and executes these actions:
 
-| Action | Description | Example |
-|--------|-------------|---------|
-| `addProductToCart` | Add products to cart | "Add 2 waffles" |
-| `removeProductFromCart` | Remove products | "Remove the brownie" |
-| `updateProductQuantity` | Change quantities | "Change waffles to 5" |
-| `getCartSummary` | View cart contents | "What's in my cart?" |
-| `clearCart` | Empty the cart | "Clear my cart" |
-| `processOrder` | Confirm order | "Process my order" |
+| Action                  | Description          | Example               |
+| ----------------------- | -------------------- | --------------------- |
+| `addProductToCart`      | Add products to cart | "Add 2 waffles"       |
+| `removeProductFromCart` | Remove products      | "Remove the brownie"  |
+| `updateProductQuantity` | Change quantities    | "Change waffles to 5" |
+| `getCartSummary`        | View cart contents   | "What's in my cart?"  |
+| `clearCart`             | Empty the cart       | "Clear my cart"       |
+| `processOrder`          | Confirm order        | "Process my order"    |
 
 ## 📡 API Documentation
 
 ### Backend Endpoints
 
 #### Chat Endpoint
+
 ```
 POST /chat
 ```
 
 **Request:**
+
 ```json
 {
   "messages": [
@@ -179,11 +188,15 @@ POST /chat
 ```
 
 **Response:**
+
 ```json
 {
   "message": "I've added waffles to your cart!",
   "actions": [
-    {"name": "addProductToCart", "parameters": {"name": "Waffle", "quantity": 1}}
+    {
+      "name": "addProductToCart",
+      "parameters": { "name": "Waffle", "quantity": 1 }
+    }
   ]
 }
 ```
@@ -202,8 +215,9 @@ PORT=8000
 ### Frontend Configuration
 
 Update backend URL in `ui/src/hooks/useCustomChat.js`:
+
 ```javascript
-const response = await fetch('http://localhost:8000/chat', {
+const response = await fetch("http://localhost:8000/chat", {
   // ...
 });
 ```
@@ -211,6 +225,7 @@ const response = await fetch('http://localhost:8000/chat', {
 ## 🧪 Development
 
 ### Backend Development
+
 ```bash
 cd agent-py
 conda activate agent-py
@@ -218,12 +233,14 @@ uvicorn app.api:app --reload --port 8000
 ```
 
 ### Frontend Development
+
 ```bash
 cd ui
 npm run dev
 ```
 
 ### Build for Production
+
 ```bash
 cd ui
 npm run build
@@ -232,6 +249,7 @@ npm run build
 ## 🐛 Troubleshooting
 
 See individual README files:
+
 - [Backend README](./agent-py/README.md)
 - [Frontend README](./ui/README.md)
 
@@ -258,6 +276,7 @@ MIT License - feel free to use this project for your own purposes.
 ## 👨‍💻 Author
 
 **Sergio Cantera**
+
 - GitHub: [@SergioCantera](https://github.com/SergioCantera)
 
 ---
