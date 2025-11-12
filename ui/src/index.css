@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: RedHat;
+  font-style: normal;
+  font-weight: 400 600 700;
+  font-display: swap;
+  src: url("/assets/fonts/RedHatText-VariableFont_wght.ttf") format("woff2");
+}
+
+@theme {
+  --color-Red: hsl(14, 86%, 42%);
+  --color-Green: hsl(159, 69%, 38%);
+  --color-Rose-50: hsl(20, 50%, 98%);
+  --color-Rose-100: hsl(13, 31%, 94%);
+  --color-Rose-300: hsl(14, 25%, 72%);
+  --color-Rose-400: hsl(7, 20%, 60%);
+  --color-Rose-500: hsl(12, 20%, 44%);
+  --color-Rose-900: hsl(14, 65%, 9%);
+}
+
+body {
+  font-family: RedHat;
+  background-color: var(--color-Rose-100);
+}
+
+

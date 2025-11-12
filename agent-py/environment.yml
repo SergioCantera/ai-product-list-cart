@@ -1,0 +1,7 @@
+name: agent-py
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+  - poetry
+prefix: /Users/Ser/miniconda3/envs/agent-py
