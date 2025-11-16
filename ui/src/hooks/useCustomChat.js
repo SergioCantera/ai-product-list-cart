@@ -16,48 +16,6 @@ export const useCustomChat = () => {
     toggleConfirmation
   } = useCartStore();
 
-  // Define las acciones disponibles para el LLM
-  const availableActions = [
-    {
-      name: 'addProductToCart',
-      description: 'Add a product to the user cart',
-      parameters: {
-        name: { type: 'string', required: true, description: 'Product name' },
-        quantity: { type: 'number', required: false, description: 'Quantity (default: 1)' }
-      }
-    },
-    {
-      name: 'removeProductFromCart',
-      description: 'Remove a product from the cart',
-      parameters: {
-        name: { type: 'string', required: true, description: 'Product name' }
-      }
-    },
-    {
-      name: 'updateProductQuantity',
-      description: 'Update the quantity of a product in the cart',
-      parameters: {
-        name: { type: 'string', required: true },
-        quantity: { type: 'number', required: true }
-      }
-    },
-    {
-      name: 'getCartSummary',
-      description: 'Get the current cart summary',
-      parameters: {}
-    },
-    {
-      name: 'clearCart',
-      description: 'Empty the cart completely',
-      parameters: {}
-    },
-    {
-      name: 'processOrder',
-      description: 'Process the current order and show confirmation',
-      parameters: {}
-    }
-  ];
-
   // Ejecuta las acciones que el LLM solicite
   const executeAction = (actionName, params) => {
     console.log('Executing action:', actionName, params);
@@ -133,12 +91,52 @@ export const useCustomChat = () => {
     }
   };
 
-  const sendMessage = async (userMessage) => {
-    // Agregar mensaje del usuario
-    const newMessages = [...messages, { role: 'user', content: userMessage }];
-    setMessages(newMessages);
-    setIsLoading(true);
+  // Define las acciones disponibles para el LLM
+  const availableActions = [
+    {
+      name: 'addProductToCart',
+      description: 'Add a product to the user cart',
+      parameters: {
+        name: { type: 'string', required: true, description: 'Product name' },
+        quantity: { type: 'number', required: false, description: 'Quantity (default: 1)' }
+      }
+    },
+    {
+      name: 'removeProductFromCart',
+      description: 'Remove a product from the cart',
+      parameters: {
+        name: { type: 'string', required: true, description: 'Product name' }
+      }
+    },
+    {
+      name: 'updateProductQuantity',
+      description: 'Update the quantity of a product in the cart',
+      parameters: {
+        name: { type: 'string', required: true },
+        quantity: { type: 'number', required: true }
+      }
+    },
+    {
+      name: 'getCartSummary',
+      description: 'Get the current cart summary',
+      parameters: {}
+    },
+    {
+      name: 'clearCart',
+      description: 'Empty the cart completely',
+      parameters: {}
+    },
+    {
+      name: 'processOrder',
+      description: 'Process the current order and show confirmation',
+      parameters: {}
+    }
+  ];
 
+  // Custom handler to process backend responses with actions
+  const customSendMessage = async (userMessage) => {
+    const newMessages = [...messages, { role: 'user', content: userMessage }];
+    
     try {
       // Preparar el contexto para el LLM
       const context = {
@@ -147,10 +145,11 @@ export const useCustomChat = () => {
           items: cartItems,
           total: totalOrder(),
           itemCount: cartItems.length
-        }
+        },
+        actions: availableActions
       };
 
-      // Llamar al backend
+      // Llamar al backend con el formato esperado
       const response = await fetch('http://localhost:8000/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -180,6 +179,22 @@ export const useCustomChat = () => {
         ? `${assistantMessage}\n\n${actionResults.join('\n')}`
         : assistantMessage;
 
+      return fullMessage;
+    } catch (error) {
+      console.error('Error sending message:', error);
+      return '❌ Error communicating with the assistant';
+    }
+  };
+
+  const sendMessage = async (userMessage) => {
+    // Agregar mensaje del usuario
+    const newMessages = [...messages, { role: 'user', content: userMessage }];
+    setMessages(newMessages);
+    setIsLoading(true);
+
+    try {
+      const fullMessage = await customSendMessage(userMessage);
+      
       // Agregar respuesta del asistente
       setMessages([
         ...newMessages,

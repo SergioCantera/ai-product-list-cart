@@ -3,6 +3,7 @@ import {Cart} from './components/Cart';
 import {OrderConfirmed} from './components/OrderConfirmed';
 import {useCartStore} from './store/cart.store';
 import {CustomChat} from './components/CustomChat';
+import {AgentChatExample} from './components/AgentChatExample';
 import { useState } from 'react';
 
 function App() {
@@ -25,8 +26,11 @@ function App() {
         </main>
       </div>
       
-      {/* Chat sidebar */}
+      {/* Chat sidebar - Original custom implementation */}
       <CustomChat onOpenChange={setIsChatOpen} />
+      
+      {/* Agent Chat Example - Using agent-state-bridge package */}
+      <AgentChatExample />
     </div>
   )
 }
